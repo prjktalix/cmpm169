@@ -114,7 +114,7 @@ function draw() {
   function mousePressed() {
     m = mouseX;
     n = mouseY;
-    r = random(100, 300);
+    r = random(100, 300);    
     for (let i = 0; i < u; i++) {
       x[i] = cos(v * i) * r + m;
       y[i] = sin(v * i) * r + n;
