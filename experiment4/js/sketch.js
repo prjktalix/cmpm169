@@ -1,28 +1,27 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+// Author: Brian Camilo
+// Date: 2024
 
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
+// Adapted from
+// Wes Modes
+// Daniel Shiffman http://codingtra.in
+// Video: https://youtu.be/cl-mHFCGzYk
 
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
+let snow = [];
+let gravity;
+let textures = [];
+let piles = [];
+let webcam;
+let spritesheet;
+let popSound;
+let shrekImage;
 
-// Globals
-let myInstance;
-let canvasContainer;
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
+function preload() {
+  spritesheet = loadImage('f32.png');
+  popSound = loadSound('pop.mp3');
+  shrekImage = loadImage('parrot.png');
+  //shrekImage = loadImage('Shrek.png');
 
-    myMethod() {
-        // code to run when method is called
-    }
 }
 
 // setup() function is called once when the program starts
@@ -36,31 +35,62 @@ function setup() {
         console.log("Resizing...");
         resizeCanvas(canvasContainer.width(), canvasContainer.height());
     });
-    // create an instance of the class
-    myInstance = new MyClass(VALUE1, VALUE2);
 
-    var centerHorz = windowWidth / 2;
-    var centerVert = windowHeight / 2;
+    webcam = createCapture(VIDEO);
+    webcam.size(width, height);
+    webcam.hide();
+
+    gravity = createVector(0, 0.3);
+    for (let x = 0; x < spritesheet.width; x += 32) {
+        for (let y = 0; y < spritesheet.height; y += 32) {
+        let img = spritesheet.get(x, y, 32, 32);
+        textures.push(img);
+        }
+    }
+    
+    for (let i = 0; i < 600; i++) {
+        let x = random(width);
+        let y = random(height);
+        let design = random(textures);
+        snow.push(new Snowflake(design));
+    }
+    
+        poseNet = ml5.poseNet(webcam);
+        poseNet.on('pose', function(results) {
+        poses = results;
+    });
 }
 
-// draw() function is called repeatedly, it's the main animation loop
 function draw() {
-    background(220);    
-    // call a method on the instance
-    myInstance.myMethod();
-
-    // Put drawings here
-    var centerHorz = canvasContainer.width() / 2 - 125;
-    var centerVert = canvasContainer.height() / 2 - 125;
-    fill(234, 31, 81);
-    noStroke();
-    rect(centerHorz, centerVert, 250, 250);
-    fill(255);
-    textStyle(BOLD);
-    textSize(140);
-    text("p5*", centerHorz + 10, centerVert + 200);
-}
-
+    background(0);
+    image(webcam, 0, 0, width, height);
+    
+    for (var flake of piles) {
+      push();
+      translate(flake.x, flake.y);
+      imageMode(CENTER);
+      image(flake.img, 0, 0, flake.r, flake.r);
+      pop();
+    }
+    
+    for (flake of snow) {
+      flake.applyForce(gravity);
+      flake.update();
+      flake.render();
+    }
+     
+     if (poses.length > 0) {
+      let pose = poses[0].pose;
+      let nose = pose.nose;
+      
+      let imageX = nose.x + 120;
+      let imageY = nose.y - 100;
+      let imageWidth = shrekImage.width / 2;
+      let imageHeight = shrekImage.height / 2;
+      
+       image(shrekImage, imageX, imageY, imageWidth, imageHeight);
+    }
+   }
 // mousePressed() function is called once after every time a mouse button is pressed
 function mousePressed() {
     // code to run when mouse is pressed

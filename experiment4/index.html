@@ -23,38 +23,52 @@
 	<script type="text/javascript" src="./js/project.js" DEFER></script>
 	<!-- Use me for a p5.js project -->
 	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+
+	<script type="text/javascript" src="./js/snowflake.js" DEFER></script>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/ml5@0.4.3/dist/ml5.min.js"></script>
 </head>
 <body>
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
 	<main id="content">
 		<section>
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 4 - Images, Video, & Sound Art</h1>
 			<div class="minor-section">
 				<h2>Imitate</h2>
-				<p>To develop artistic creativity in coding, it can be helpful to start by studying and learning from existing examples. This might involve reviewing code written by others, analyzing successful techniques, or even copying and modifying code to better understand how it works. By imitating and learning from existing techniques and strategies, we can gain a better understanding of what has been done before and what is possible, and identify opportunities for improvement and innovation.</p>
-				<p>What code did you start with? (You don't need to provide the code itself, but where did you start?) Document this step briefly.</p>
+				<p>I would like to create a combination of the snowflakes of Snowy Painting By Wes Modes, integrated with a video webcam and a similar filter you can find on TikTok, Snapchat, or Instagram filters.</p>
+				<p>I want the idea of what Wes Modes got from his work of Snowfall by Kelsi. My idea is that the snow can land on the person’s shoulder on a video webcam instead of an image. In addition, I want to create a sound effect when the snowflakes hit the shoulder of the person.  The image and link can be found below. <a href="https://openprocessing.org/sketch/1365538">link 1</a> & <a href="editor.p5js.org/wmodes/full/xTft1pelA">link 2</a> </p>
+			
+				<p>After successfully creating this, I want to add a filter similar to Instagram, TikTok, and Snapchat. I have a script foundation for the filter, which can help me create the envisioning filter. <a href="editor.p5js.org/simran.duggal/sketches/YmUlAFeLJ"> click here</a></p>
+			
 			</div>
 
 			<div class="minor-section">
-				<h2>Integrate</h2>
-				<p>After learning from existing techniques and strategies, we can build upon that foundation by combining elements from different sources. This might involve combining elements from different programming languages, using libraries or frameworks in new ways, or bringing together techniques from different fields or disciplines. By integrating and combining elements from different sources, we can create something new and unique.</p>
-				<p>How did you extend the code or combine with another technique to make something new? Document this step.</p>
+				<h2>Integrate / Innovate pt.1</h2>
+				<p>The integration and innovation part is something I struggled with for this assignment. Both steps overlap, and my goal is to integrate them all. I believe the innovative part involves bringing the filter to reality, as this will be the most challenging aspect. With that in mind, I want to separate the steps into two parts: the integration part involves the creation of the snow and the sound art, and the filter falls under the innovation step.</p>
+				<p>My script was inspired by Wes Modes' 'Snowy Painting.' I used both scripts from sketch.js and snowflake.js to create snowflakes on my webcam feed. I made changes in sketch.js by removing the paintings and any references to them. I also added webcam capture functionality in the setup function and modified the draw function to display the webcam feed instead of static images.</p>
+
+				<p>	Then, I modified the snowflake.js script, adjusting the surface property collision to target my shoulders. Before implementing the collision check, I researched the eye filter mentioned above, involving poseNet and ml5.js, and found it very interesting. This is the first innovation I plan to use to make it work. You can find the link and the image example below. <a href="https://editor.p5js.org/kylemcdonald/sketches/H1OoUd9h7">click here</a></p>
+
+				<p>Going back to the snowflake.js script, I modified my collision detection where the snowflakes hit my shoulder. It does work in some capacity, but it might be weird from my webcam position.</p>
+			
+				<p>I tried adding sounds to the snowflake script where every snowflake that hit on my shoulder would create a popping sound, but it ended up a disaster where I heard a pop every millisecond, due to an excessive amount of snowflakes hitting my shoulder. If you want to hear the sound, you can uncomment the script line 88 in snowflake.js.</p>
+			
 			</div>
 
 			<div class="minor-section">
-				<h2>Innovate</h2>
-				<p>Finally, we can introduce new or original ideas to our coding process by thinking creatively and pushing the boundaries. This might involve developing entirely new techniques or approaches, or using existing techniques in new and creative ways. By innovating and introducing new ideas, we can create art that is truly groundbreaking.</p>
-				<p>How did you use the code as a jumping off point to create something truly unique and novel? Document this step thoroughly.</p>
+				<h2>Innovate / Innovate pt.2</h2>
+				<p>	Now, I want to create a filter where my character will appear on my screen depending on where I am. I used Shrek as the image filter because I like being unconventional, and I think it's funny. The script is simple and similar to what I did with the snowflake collision script.</p>
+				<p>Pose.nose triggers the script where my nose is detected on my webcam. I then create the image, adjusting its location so that my nose serves as the pivot point, and also adjusting the size of the image My whole script can be found at this link: <a href="https://editor.p5js.org/prjktalix/sketches/UZAV6ll2C">click here</a>.</p>
+			
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment. Here's where you can put your reflections.</p>
-				<ul>
-					<li>What part of the project you contributed</li>
-					<li>A reflection on your work and the work of the team</li>
-					<li>Brief highs and lows</li>
-				</ul>
+				<p>I worked on this project by myself, and it was very fun to make. I primarily integrated the work my professor did, adding filters and implementing them on the webcam. I really wanted to recreate the filters found on Instagram, Snapchat, or TikTok, but the images were hard to find. My high point was definitely transitioning the work from images to the webcam. The ml5.js and pose estimation really helped my script work. The low point was the thought process of looking for ideas to make it work. I struggled to think of any ideas because the assignment's requirements to integrate and innovate overlapped a lot. That's why I asked my TA about it and clarified how I could make it work. In addition to my challenges, integrating sound art into my work was difficult. Adding sound did more harm than good, so I decided to comment out my pop.play just in case you want to hear how it sounds. Overall, I really had fun with this project!</p>
 			</div>
 
 			<div class="minor-section">
