@@ -1,67 +1,105 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+var particles = [];
+var song;
+var fft;
 
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
-
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
-
-// Globals
-let myInstance;
-let canvasContainer;
-
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
+class Particle {
+    constructor() {
+      this.pos = p5.Vector.random3D().mult(random(50, 250));
+      this.vel = p5.Vector.random3D();
+      this.acc = createVector(0, 0, 0);
+      this.size = random(5, 20);
+      this.lifeSpan = random(100, 200);
+      this.color = [random(100, 255), random(100, 255), random(100, 255), random(150, 200)];
+  
+      const shapes = ['sphere', 'box', 'cylinder', 'cone'];
+      this.shape = random(shapes);
     }
-
-    myMethod() {
-        // code to run when method is called
+  
+    update(cond) {
+      this.vel.add(this.acc);
+      this.pos.add(this.vel);
+      this.acc.mult(0); 
+      this.lifeSpan -= 1.5;
+      if (cond) {
+        this.vel.mult(1.05);
+      }
     }
-}
+  
+    edges() {
+      if (this.lifeSpan <= 0) {
+        return true;
+      }
+      return false;
+    }
+  
+    show() {
+      noStroke();
+      fill(this.color);
+      push();
+      translate(this.pos.x, this.pos.y, this.pos.z);
+      switch (this.shape) {
+        case 'sphere':
+          sphere(this.size);
+          break;
+        case 'box':
+          box(this.size);
+          break;
+        case 'cylinder':
+          cylinder(this.size / 2, this.size);
+          break;
+        case 'cone':
+          cone(this.size / 2, this.size);
+          break;
+      }
+      pop();
+    }
+  }
+  
+  function preload() {
+    song = loadSound("titanium.mp3"); // credits AlisiaBeats
+  }
+  
+  function setup() {
+    createCanvas(windowWidth, windowHeight, WEBGL);
+    angleMode(DEGREES);
+    fft = new p5.FFT(0.3);
+    song.play();
+  }
+  
+  function draw() {
+    background(0);
+  
+    // rotate on mouse position
+    let rotateXAngle = map(mouseY, 0, height, -180, 180);
+    let rotateYAngle = map(mouseX, 0, width, -180, 180);
+    rotateX(rotateXAngle);
+    rotateY(rotateYAngle);
+  
+    fft.analyze();
+    var bass = fft.getEnergy("bass");
 
-// setup() function is called once when the program starts
-function setup() {
-    // place our canvas, making it fit our container
-    canvasContainer = $("#canvas-container");
-    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-    canvas.parent("canvas-container");
-    // resize canvas is the page is resized
-    $(window).resize(function() {
-        console.log("Resizing...");
-        resizeCanvas(canvasContainer.width(), canvasContainer.height());
-    });
-    // create an instance of the class
-    myInstance = new MyClass(VALUE1, VALUE2);
-
-    var centerHorz = windowWidth / 2;
-    var centerVert = windowHeight / 2;
-}
-
-// draw() function is called repeatedly, it's the main animation loop
-function draw() {
-    background(220);    
-    // call a method on the instance
-    myInstance.myMethod();
-
-    // Put drawings here
-    var centerHorz = canvasContainer.width() / 2 - 125;
-    var centerVert = canvasContainer.height() / 2 - 125;
-    fill(234, 31, 81);
-    noStroke();
-    rect(centerHorz, centerVert, 250, 250);
-    fill(255);
-    textStyle(BOLD);
-    textSize(140);
-    text("p5*", centerHorz + 10, centerVert + 200);
-}
-
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
-}
+    // particles
+    if (frameCount % 5 === 0) {
+      let p = new Particle();
+      particles.push(p);
+    }
+    for (let i = particles.length - 1; i >= 0; i--) {
+      particles[i].update(bass > 150);
+      if (!particles[i].edges()) {
+        particles[i].show();
+      } else {
+        particles.splice(i, 1);
+      }
+    }
+  }
+  
+  function mousePressed() {
+    if (song.isPlaying()) {
+      song.pause();
+      noLoop();
+    } else {
+      song.play();
+      loop();
+    }
+  }
+  
