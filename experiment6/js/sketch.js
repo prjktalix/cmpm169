@@ -1,67 +1,118 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+// Author: Brian Camilo
+// Date: Febuary 14, 2024
 
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
+// Adapted from
+// servetgulnaroglu
+// Source code: https://github.com/servetgulnaroglu/cube.c/blob/master/cube.c
 
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
 
-// Globals
-let myInstance;
-let canvasContainer;
+let A = 0, B = 0, C = 0;
+let cubeWidth = 20;
+const width = 160, height = 44;
+const zBuffer = new Array(width * height); 
+let buffer = new Array(width * height);
+const backgroundASCIICode = '.';
+const distanceFromCam = 100;
+let horizontalOffset;
+const K1 = 40;
+const incrementSpeed = 0.6;
+let cubes = [
+  { size: 20, offset: -40 },
+  { size: 10, offset: 10 },
+  { size: 5, offset: 40 }
+];
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
+let spinning = false;
 
-    myMethod() {
-        // code to run when method is called
-    }
-}
-
-// setup() function is called once when the program starts
 function setup() {
-    // place our canvas, making it fit our container
-    canvasContainer = $("#canvas-container");
-    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-    canvas.parent("canvas-container");
-    // resize canvas is the page is resized
-    $(window).resize(function() {
-        console.log("Resizing...");
-        resizeCanvas(canvasContainer.width(), canvasContainer.height());
-    });
-    // create an instance of the class
-    myInstance = new MyClass(VALUE1, VALUE2);
-
-    var centerHorz = windowWidth / 2;
-    var centerVert = windowHeight / 2;
+  createCanvas(800, 400);
+  textSize(8);
+  noStroke();
+  frameRate(30);
 }
 
-// draw() function is called repeatedly, it's the main animation loop
+let textCounter = 0;
+
+let inputText = 'All the world\'s a stage, and all the men and women merely players. They have their exits and their entrances.';
+
+function calculateX(i, j, k) {
+  return j * sin(A) * sin(B) * cos(C) - k * cos(A) * sin(B) * cos(C) +
+         j * cos(A) * sin(C) + k * sin(A) * sin(C) + i * cos(B) * cos(C);
+}
+
+function calculateY(i, j, k) {
+  return j * cos(A) * cos(C) + k * sin(A) * cos(C) -
+         j * sin(A) * sin(B) * sin(C) + k * cos(A) * sin(B) * sin(C) -
+         i * cos(B) * sin(C);
+}
+
+function calculateZ(i, j, k) {
+  return k * cos(A) * cos(B) - j * sin(A) * cos(B) + i * sin(B);
+}
+
+function calculateForSurface(cubeX, cubeY, cubeZ, ch, cubeSize) {
+  let x = calculateX(cubeX, cubeY, cubeZ);
+  let y = calculateY(cubeX, cubeY, cubeZ);
+  let z = calculateZ(cubeX, cubeY, cubeZ) + distanceFromCam;
+
+  let ooz = 1 / z;
+
+  let xp = (width / 2 + horizontalOffset + K1 * ooz * x * 2);
+  let yp = (height / 2 + K1 * ooz * y);
+
+  let idx = Math.floor(xp) + Math.floor(yp) * width;
+  if (idx >= 0 && idx < width * height) {
+    if (ooz > zBuffer[idx]) {
+      zBuffer[idx] = ooz;
+      buffer[idx] = ch;
+    }
+  }
+}
+
+function drawCube(cube) {
+  cubeWidth = cube.size;
+  horizontalOffset = cube.offset;
+  
+  for (let cubeX = -cubeWidth; cubeX < cubeWidth; cubeX += incrementSpeed) {
+    for (let cubeY = -cubeWidth; cubeY < cubeWidth; cubeY += incrementSpeed) {
+      let faceIndex = Math.floor(cubeX + cubeWidth) + Math.floor(cubeY + cubeWidth) * cube.size * 2;
+      let ch = inputText[faceIndex % inputText.length];
+      calculateForSurface(cubeX, cubeY, -cubeWidth, ch, cube.size);
+      calculateForSurface(cubeWidth, cubeY, cubeX, ch, cube.size);
+      calculateForSurface(-cubeWidth, cubeY, -cubeX, ch, cube.size);
+      calculateForSurface(-cubeX, cubeY, cubeWidth, ch, cube.size);
+      calculateForSurface(cubeX, -cubeWidth, -cubeY, ch, cube.size);
+      calculateForSurface(cubeX, cubeWidth, cubeY, ch, cube.size);
+    }
+  }
+}
+
 function draw() {
-    background(220);    
-    // call a method on the instance
-    myInstance.myMethod();
+  background(0);
+  fill(255);
+  buffer.fill(backgroundASCIICode);
+  zBuffer.fill(0);
+  if (!spinning) {
+    textCounter = 0;
+  }
 
-    // Put drawings here
-    var centerHorz = canvasContainer.width() / 2 - 125;
-    var centerVert = canvasContainer.height() / 2 - 125;
-    fill(234, 31, 81);
-    noStroke();
-    rect(centerHorz, centerVert, 250, 250);
-    fill(255);
-    textStyle(BOLD);
-    textSize(140);
-    text("p5*", centerHorz + 10, centerVert + 200);
+  cubes.forEach(cube => drawCube(cube));
+
+  for (let i = 0; i < buffer.length; i++) {
+    let x = i % width;
+    let y = Math.floor(i / width);
+    text(buffer[i], x * 5, y * 9);
+  }
+  
+  if (spinning) {
+    A += 0.05;
+    B += 0.05;
+    C += 0.01;
+  }
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+function keyPressed() {
+  if (key === ' ') {
+    spinning = !spinning;
+  }
 }

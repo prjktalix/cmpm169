@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 6: Grammars & Text Art</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -28,44 +28,47 @@
 	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
 	<main id="content">
 		<section>
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 6: Grammars & Text Art</h1>
 			<div class="minor-section">
 				<h2>Imitate</h2>
-				<p>To develop artistic creativity in coding, it can be helpful to start by studying and learning from existing examples. This might involve reviewing code written by others, analyzing successful techniques, or even copying and modifying code to better understand how it works. By imitating and learning from existing techniques and strategies, we can gain a better understanding of what has been done before and what is possible, and identify opportunities for improvement and innovation.</p>
-				<p>What code did you start with? (You don't need to provide the code itself, but where did you start?) Document this step briefly.</p>
+				<p>I want to create something in 3D art text where the text is generated dynamically based on the position of the designed text. With that, I started by looking for sample text from the <a href="https://editor.p5js.org/generative-design/sketches/P_2_3_3_01">generative design</a> with the image below.</p>
+				<img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/427877618_1844977972607396_5117108963053254963_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=40X214BfpdsAX-JjaYN&_nc_ht=scontent-sjc3-1.xx&oh=03_AdRzW4FzjEqeITmMLdJSm1wDWO2RFrSEu0zVFm91PGzkWw&oe=65F532F8">
 			</div>
 
 			<div class="minor-section">
 				<h2>Integrate</h2>
-				<p>After learning from existing techniques and strategies, we can build upon that foundation by combining elements from different sources. This might involve combining elements from different programming languages, using libraries or frameworks in new ways, or bringing together techniques from different fields or disciplines. By integrating and combining elements from different sources, we can create something new and unique.</p>
-				<p>How did you extend the code or combine with another technique to make something new? Document this step.</p>
+				<p>	I found a <a href="https://www.youtube.com/watch?v=p09i_hoFdd0&t=1s">YouTube video</a> that demonstrates a script creating a spinning cube in the C language. I want to recreate this spinning cube, but instead of using special symbols, I aim to generate text while the cube is spinning. My main task for this step is integrating this script from C to p5.js. Most of the script is based on calculating the surface area, as well as the X, Y, and Z coordinates.</p>
+				<img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/428106932_1462901071305984_2094033458137656040_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=soIszqyBp7oAX-XDqs7&_nc_ht=scontent-sjc3-1.xx&oh=03_AdS-RPiwJz2qhgIF7qT2uJHIvQIYNd-dtc3M0NYfxJyPdg&oe=65F52021">
+				<p>I integrated the original script into a p5.js script by setting it up with some array values and the frame rate. In addition, I also have helper functions such as calculateX, calculateY, calculateZ, and calculateForSurface, similar to those from the original script. I added two more cubes to my cube array and used a forEach loop in my draw function.</p>
+				<img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/427856009_365414433023568_3453958846783663896_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=eKzCfzVaXysAX9k8f-0&_nc_ht=scontent-sjc3-1.xx&oh=03_AdQWEK33uzB5ujYmG2j4pHU_N6PI1dWMn15lcSwRZB5Q9w&oe=65F526AA">
 			</div>
-
 			<div class="minor-section">
 				<h2>Innovate</h2>
-				<p>Finally, we can introduce new or original ideas to our coding process by thinking creatively and pushing the boundaries. This might involve developing entirely new techniques or approaches, or using existing techniques in new and creative ways. By innovating and introducing new ideas, we can create art that is truly groundbreaking.</p>
-				<p>How did you use the code as a jumping off point to create something truly unique and novel? Document this step thoroughly.</p>
+				<p>I combined the spinning cube script with a text-based image script I found during the imitating stage. I replaced the fixed characters for the cube surfaces with characters from inputText. Additionally, I used the greyscale value to determine the character size based on the zBuffer. This method replaces the characters on the surface of the spinning cube, previously special characters, with their desired size determined by the greyscale value.</p>
+				<img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/427750901_916615873088673_7488510087138008971_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=xAaPzkokEpIAX-FCK-t&_nc_ht=scontent-sjc3-1.xx&oh=03_AdSMbbiSvM1Z0WoKeMLljPZmc18OdDemVhReDycjaLYv4g&oe=65F51E51">
+				<p>	My problem is that the words are jumbled and don't form any coherent text or words from the input text. I modified the way I map text onto the cube's surfaces so that it starts at the same point for each face of the cube.</p>
+				<img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/428202327_1464020584524434_5984077366917771233_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=tfcKaH4ETpAAX9ukWvA&_nc_ht=scontent-sjc3-1.xx&oh=03_AdStaB0ASYYZRI1TWELsBgroA55wVbFGESt9VNH_BCYeoQ&oe=65F54234">
+				<p>The p5.ks link can be found here: <a href="https://editor.p5js.org/prjktalix/sketches/wdu0KfkWX">link.</a></p>
+				<p>The website link can be found here: <a href="https://prjktalix.github.io/cmpm169/experiment6/"> link.</a></p>
+			
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment. Here's where you can put your reflections.</p>
-				<ul>
-					<li>What part of the project you contributed</li>
-					<li>A reflection on your work and the work of the team</li>
-					<li>Brief highs and lows</li>
-				</ul>
+				<p>I experimented further with the spinning cube to enable each word to be visible while pausing, but was unable to achieve this. I realized that as soon as I spun the cube, the text's 
+					layout was based on the cube's surface, making it impossible to fix. One idea I considered was replacing the ASCII character with a string, but this led to additional issues. Despite these challenges, 
+					I achieved a lot while creating this script, including integrating it with p5.js and making the text work. I undertook this project on my own, which was challenging. By the end of this project, I had learned 
+					a great deal about using mathematical calculations with text and grammar.
+				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Results</h2>
-				<div id="canvas-container">
-					<!-- canvas will be added here -->
-				</div>
+				<p>Press "Space" to start or pause</p>
+			</div>
 			</div>
 		</section>
 		<nav id="links">
-			<!-- Put links to other pages (including the homepage) here. -->
 		</nav>
 	</main>
 </body>
