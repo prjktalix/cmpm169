@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment 7: Data Visualization & Networks</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+	<!-- Use me for a JavaScript OOP Project -->
+	<script type="text/javascript" src="./js/project.js" DEFER></script>
+	<!-- Use me for a p5.js project -->
+	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+			<h1>Experiment 7: Data Visualization & Networks</h1>
+			<div class="minor-section">
+				<h2>Imitate</h2>
+				<p>We have discussed various creative image ideas for this assignment. With that in mind, we thought about creating a scatter plot with data as our starting point. We also considered using the top 100 anime on MyAnimeList as our main dataset for plotting.</p>
+			</div>
+			<div class="minor-section">
+				<h2>Integrate</h2>
+				<p>	We decided to create a force-directed graph to visualize the anime data. We designed each node, representing an anime, to repel each other to avoid overlap. Additionally, we added an interactive hover feature that displays the details of each node. We created a node class to encapsulate the information of each anime. Also, we added color intensity based on the popularity of the anime. The image below shows us interacting with a node, with details visible.</p>
+				<img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/428899251_800769235217828_5940374124110476741_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=YcM1grlhAkwAX8lfOmC&_nc_ht=scontent-sjc3-1.xx&oh=03_AdQZsj7IHbS-zr9owFHxrNPgW4b6zy1ETcJtUVD5J0OWtQ&oe=6604C959">
+
+			</div>
+			<div class="minor-section">
+				<h2>Innovate</h2>
+				<p>In this part, we decided to create a visual effect where nodes are linked by lines when they are close to each other. This works by checking the distance between the nodes and drawing a line when they are within range.</p>
+				<p>P5.js can be found here: <a href="https://editor.p5js.org/prjktalix/sketches/0f7jtGMEb">click here</a></p>
+				<img src="https://scontent-sjc3-1.xx.fbcdn.net/v/t1.15752-9/428880592_1357014941668454_2003439693675652002_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=Q9PwLtKL0hUAX8n9nJG&_nc_ht=scontent-sjc3-1.xx&oh=03_AdToCMYAFkALSDltncSiDwp5mEltAOqyLDMq5gyhoNqKeg&oe=6604A7CD">
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p>
+					Brian - This is a collaborative work between Jose and me. I primarily focused on the integration part, where I added the nodes and attempted to create a force-directed graph. The process was very interesting, 
+					as I mostly had to create a class to encapsulate the anime nodes. I am very proud of how the script turned out. It is a complicated script that happens to work well. The challenge was the class encapsulation, 
+					while the highlight was implementing the hover feature for the nodes because it was very straightforward.
+				</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Results</h2>
+			</div>
+			</div>
+		</section>
+		<nav id="links">
+		</nav>
+	</main>
+</body>
+</html>
